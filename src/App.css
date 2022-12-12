@@ -76,7 +76,7 @@ h6 {
 
 #root,
 .App {
-	height: 100%;
+	min-height: 100vh;
 	width: 100%;
 }
 
@@ -128,28 +128,31 @@ h6 {
 }
 
 .chart-container {
-	display: flex;
-	flex-wrap: wrap;
-	text-align: center;
 	cursor: pointer;
-}
-
-.amounts {
 	display: flex;
-	height: fit-content;
 }
 
 .charts {
+	display: grid;
+	text-align: center;
+	grid-template-columns: repeat(7, 1fr);
+}
+
+.single-chart-container {
 	display: flex;
-	align-items: flex-end;
+	flex-direction: column;
+	justify-content: end;
 }
 
 .amount {
-	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	width: 4.5rem;
 	height: 2.5rem;
 	color: white;
 	font-size: 13px;
+	font-weight: 700;
 	background-color: var(--Dark-brown);
 	border-radius: 10px;
 }
@@ -172,8 +175,15 @@ h6 {
 }
 
 .chart:hover {
-	color: var(--Soft-red-hover);
 	background-color: var(--Soft-red-hover);
+}
+
+.today-chart {
+	background-color: var(--Cyan);
+}
+
+.today-chart:hover {
+	background-color: hsl(186, 34%, 80%);
 }
 
 .day {
@@ -228,12 +238,6 @@ h6 {
 }
 
 @media only screen and (max-width: 550px) {
-	.chart-container:visited,
-	.chart-container:hover,
-	.chart-container:active {
-		background-color: transparent;
-		color: white;
-	}
 	.balance-container {
 		width: 21.25rem;
 		height: 6rem;
@@ -252,12 +256,37 @@ h6 {
 		padding: 1.25rem 1.25rem;
 	}
 
+	.chart-container {
+		cursor: auto;
+	}
+
+	.title {
+		font-size: 23px;
+		margin-bottom: 0rem;
+	}
+
+	.charts {
+		grid-template-columns: repeat(7, 45px);
+	}
+
+	.amount {
+		width: 3rem;
+		height: 2.5rem;
+		color: white;
+		font-size: 12px;
+		font-weight: 700;
+	}
+
+	.emty-amount {
+		width: 3rem;
+		height: 2.5rem;
+		visibility: hidden;
+	}
+
 	.chart {
 		width: 2rem;
 		margin-left: 0.5rem;
 		margin-top: 0.5rem;
-		background-color: var(--Soft-red);
-		border-radius: 5px;
 	}
 
 	.spending-footer {
@@ -266,5 +295,29 @@ h6 {
 
 	.right {
 		align-self: center;
+	}
+}
+
+@media only screen and (max-width: 347px) {
+	.balance-container {
+		width: 15rem;
+		height: 6rem;
+		padding: 0 1.25rem;
+		background-position: 8.5rem;
+	}
+
+	.spending-container {
+		width: 15rem;
+		height: fit-content;
+		padding: 1.25rem 1.25rem;
+	}
+
+	.charts {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	.total-month-number {
+		font-size: 20px;
 	}
 }

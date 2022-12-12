@@ -1,10 +1,11 @@
 import "./App.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Data from "../data.json";
 
 function App() {
 	const [amount, setAmount] = useState("");
+	const [today, setToday] = useState("");
 
 	const DisplayAmount = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 		const SingleAmount = e.currentTarget.firstChild?.textContent;
@@ -13,6 +14,15 @@ function App() {
 	const HideAmount = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 		setAmount("");
 	};
+
+	useEffect(() => {
+		setToday(
+			new Date()
+				.toLocaleString("en-Us", { weekday: "short" })
+				.toLocaleLowerCase()
+		);
+	}, []);
+
 	return (
 		<main className="App">
 			<div className="balance-container">
@@ -22,33 +32,29 @@ function App() {
 			<div className="spending-container">
 				<h1 className="title">Spending - Last 7 days</h1>
 				<div className="chart-container">
-					<div className="amounts">
-						{Data.map((data) => {
-							return (
-								<div key={data.amount}>
-									{amount === String(data.amount) ? (
-										<div className="amount">${data.amount}</div>
-									) : (
-										<div className="emty-amount"></div>
-									)}
-								</div>
-							);
-						})}
-					</div>
-
 					<div className="charts">
 						{Data.map((data) => {
 							return (
-								<div key={data.day}>
+								<div key={data.day} className="single-chart-container">
+									<div>
+										{amount === String(data.amount) ? (
+											<div className="amount">${data.amount}</div>
+										) : (
+											<div className="emty-amount"></div>
+										)}
+									</div>
+
 									<div
-										className="chart"
+										className={
+											today === data.day ? "chart today-chart" : "chart"
+										}
 										onMouseEnter={(e) => {
 											DisplayAmount(e);
 										}}
 										onMouseLeave={(e) => {
 											HideAmount(e);
 										}}
-										style={{ height: data.amount / 5 + "rem" }}
+										style={{ height: data.amount / 6 + "rem" }}
 									>
 										{data.amount}
 									</div>
